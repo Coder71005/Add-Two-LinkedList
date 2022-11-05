@@ -1,0 +1,64 @@
+/**
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
+class Solution {
+    public int get(ListNode node){
+        if(node == null){
+            return 0;
+        }
+        return 1+get(node.next);
+    }
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        int size1 = get(l1);
+        int size2 = get(l2);
+        if(size1 == 1 && size2 == 1 ){
+            int add = l1.val+l2.val;
+            if(add > 9){
+                ListNode head = new ListNode(add%10);
+                ListNode tail = new ListNode(add/10);
+                head.next = tail;
+                return head;
+
+            }
+            return new ListNode(add); 
+        }
+         int carry = 0;
+          ListNode head = null,temp = null;
+          while(l1!=null || l2!= null || carry ==1) {
+        	  
+        	  int val = carry;
+        	  
+        	  if(l1!=null)
+        		  val+=l1.val;
+        	  
+        	  if(l2!=null)
+        		  val+=l2.val;
+        	  
+        	  carry = val/10;
+        	  val = val%10;
+        	  
+        	  ListNode n = new ListNode(val);
+        	  if(head == null) {
+        		  head = n;
+        		  temp = n; 
+        	  }
+        	  temp.next = n;
+        	  temp = n;
+        	  
+        	  if(l1!=null)
+        		  l1 = l1.next;
+        	 
+        	  if(l2!=null)
+        		  l2 = l2.next;
+        	  
+          }
+          return head;
+    
+    }
+}
